@@ -50,7 +50,7 @@ namespace UiPathTeam.GenerateRandomPassword.Activities.Tests
                     Assert.IsTrue(generatedPassword.Count(Char.IsUpper) >= requiredUC);
                     Assert.IsTrue(generatedPassword.Where(c => Char.IsLetterOrDigit(c) == false).All(allowedSpecial.Contains));
                 }
-                catch (ArgumentException ex)
+                catch (ArgumentException)
                 {
                     Assert.IsTrue(minLength < requiredLC + requiredUC + requiredDigits + requiredSpecial);
                 }

@@ -30,7 +30,7 @@ namespace UiPathTeam.GenerateRandomPassword.Activities
         public InArgument<Int32> RequiredSpecialChars { get; set; }
 
         [Category("Input")]
-        [DisplayName("Required special characters")]
+        [DisplayName("Allowed special characters")]
         [Description("If not provided, will default to:\" !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")]
         public InArgument<String> AllowedSpecialChars { get; set; }
 
