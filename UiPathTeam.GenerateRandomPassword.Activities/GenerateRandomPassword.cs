@@ -12,21 +12,32 @@ namespace UiPathTeam.GenerateRandomPassword.Activities
     {
         [Category("Input")]
         [DisplayName("Minimum password length")]
+        [Description("Maximum allowed value is 1000 characters")]
         public InArgument<Int32> MinLength { get; set; }
+
         [Category("Input")]
         [DisplayName("Maximum password length")]
+        [Description("Maximum allowed value is 1000 characters")]
         public InArgument<Int32> MaxLength { get; set; }
+
         [Category("Input")]
         [DisplayName("Required digits")]
+        [Description("Maximum allowed value is 1000 characters")]
         public InArgument<Int32> RequiredDigits{ get; set; }
+
         [Category("Input")]
         [DisplayName("Required uppercase letters")]
+        [Description("Maximum allowed value is 1000 characters")]
         public InArgument<Int32> RequiredUpperCaseLetters{ get; set; }
+
         [Category("Input")]
         [DisplayName("Required lowercase letters")]
+        [Description("Maximum allowed value is 1000 characters")]
         public InArgument<Int32> RequiredLowerCaseLetters { get; set; }
+
         [Category("Input")]
         [DisplayName("Required special characters")]
+        [Description("Maximum allowed value is 1000 characters")]
         public InArgument<Int32> RequiredSpecialChars { get; set; }
 
         [Category("Input")]
@@ -37,6 +48,8 @@ namespace UiPathTeam.GenerateRandomPassword.Activities
         [Category("Output")]
         [DisplayName("Password")]
         public OutArgument<string> Password { get; set; }
+
+        public const int CapSize = 1000;
 
         private static string LowerCaseLetters = "abcdefgijkmnopqrstwxyz";
         private static string UpperCaseLetters = "ABCDEFGHJKLMNPQRSTWXYZ";
@@ -55,6 +68,19 @@ namespace UiPathTeam.GenerateRandomPassword.Activities
             SpecialChars = string.IsNullOrEmpty(AllowedSpecialChars.Get(context)) ? SpecialChars : AllowedSpecialChars.Get(context);
 
             var allAvailableChars = LowerCaseLetters + UpperCaseLetters + Digits + SpecialChars;
+
+            if (new[] { minLength, maxLength, requiredDigits,
+                requiredLowerCaseLetters,
+                requiredUpperCaseLetters,
+                requiredNonAlphaNumericChars }.Any(item => item > CapSize))
+            {
+                throw new ArgumentException("All character requirements have to be lower or equal to " + CapSize);
+            }
+
+            if (minLength > maxLength)
+            {
+                throw new ArgumentException("Minimum password length cannot be greater than maximum password length");
+            }
 
             if (minLength < requiredDigits + requiredLowerCaseLetters + requiredUpperCaseLetters + requiredNonAlphaNumericChars)
             {

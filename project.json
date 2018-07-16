@@ -1,0 +1,14 @@
+{
+  "name": "UiPathTeam.GenerateRandomPassword.Activities",
+  "description": "Project",
+  "main": "GenerateRandomPassword.xaml",
+  "dependencies": {},
+  "excludedData": [
+    "Private:*",
+    "*password*"
+  ],
+  "toolVersion": "18.1",
+  "projectVersion": "1.0.6771.38733",
+  "packOptions": {},
+  "runtimeOptions": {}
+}

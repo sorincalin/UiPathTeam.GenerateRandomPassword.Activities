@@ -17,15 +17,16 @@ namespace UiPathTeam.GenerateRandomPassword.Activities.Tests
             var rngCrypto = new RNGCryptoServiceProvider();
             rngCrypto.GetBytes(randomBytes);
             var randomGenerator = new Random(BitConverter.ToInt32(randomBytes, 0));
+            var capSize = GenerateRandomPassword.CapSize;
 
             for (int idx = 0; idx < 100000; idx++)
             {
-                var minLength = randomGenerator.Next(10, 30 + 1);
-                var maxLength = randomGenerator.Next(minLength, minLength + 20 + 1);
-                var requiredLC = randomGenerator.Next(0, 5 + 1);
-                var requiredUC = randomGenerator.Next(0, 5 + 1);
-                var requiredSpecial = randomGenerator.Next(0, 5 + 1);
-                var requiredDigits = randomGenerator.Next(0, 5 + 1);
+                var minLength = randomGenerator.Next(10, capSize + 200 + 1);
+                var maxLength = randomGenerator.Next(minLength - 100, minLength + 20 + 1);
+                var requiredLC = randomGenerator.Next(0, capSize + 100 + 1);
+                var requiredUC = randomGenerator.Next(0, capSize + 100 + 1);
+                var requiredSpecial = randomGenerator.Next(0, capSize + 100 + 1);
+                var requiredDigits = randomGenerator.Next(0, capSize + 100 + 1);
 
                 var generateRandomPassword = new GenerateRandomPassword
                 {
@@ -52,7 +53,13 @@ namespace UiPathTeam.GenerateRandomPassword.Activities.Tests
                 }
                 catch (ArgumentException)
                 {
-                    Assert.IsTrue(minLength < requiredLC + requiredUC + requiredDigits + requiredSpecial);
+                    Assert.IsTrue(minLength > maxLength ||
+                        minLength > GenerateRandomPassword.CapSize ||
+                        maxLength > GenerateRandomPassword.CapSize ||
+                        requiredLC > GenerateRandomPassword.CapSize ||
+                        requiredUC > GenerateRandomPassword.CapSize ||
+                        requiredSpecial > GenerateRandomPassword.CapSize ||
+                        minLength < requiredLC + requiredUC + requiredDigits + requiredSpecial);
                 }
             }
         }
