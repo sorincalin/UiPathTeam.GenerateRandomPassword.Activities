@@ -82,9 +82,9 @@ namespace UiPathTeam.GenerateRandomPassword.Activities
                 throw new ArgumentException("Minimum password length cannot be greater than maximum password length");
             }
 
-            if (minLength < requiredDigits + requiredLowerCaseLetters + requiredUpperCaseLetters + requiredNonAlphaNumericChars)
+            if (maxLength < requiredDigits + requiredLowerCaseLetters + requiredUpperCaseLetters + requiredNonAlphaNumericChars)
             {
-                throw new ArgumentException("Min length is lower than total required length");
+                throw new ArgumentException("Maximum length is lower than total required length");
             }
 
             var randomBytes = new Byte[4];
