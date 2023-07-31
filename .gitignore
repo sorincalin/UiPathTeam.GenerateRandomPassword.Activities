@@ -7,3 +7,8 @@
 /UiPathTeam.GenerateRandomPassword.Activities.Tests/obj/Debug
 /UiPathTeam.GenerateRandomPassword.Activities.Tests/bin/Debug
 /UiPathTeam.GenerateRandomPassword.Activities/bin/Debug
+/.vs
+/Packaging/obj
+/UiPathTeam.GenerateRandomPassword.Activities/obj
+/Packaging/.DS_Store
+/Output/Activities
